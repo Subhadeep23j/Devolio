@@ -49,9 +49,9 @@ export default function Navbar() {
                     {/* Logo */}
                     <div className="flex items-center">
                         <div className="bg-blue-500 h-8 w-8 rounded-full flex items-center justify-center text-lg font-bold">
-                            A
+                            D
                         </div>
-                        <span className="ml-2 text-xl font-bold">AppName</span>
+                        <span className="ml-2 text-xl font-bold">Devolio</span>
                     </div>
 
                     {/* Desktop Links */}
