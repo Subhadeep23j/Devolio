@@ -5,6 +5,8 @@ export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+    const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
+
 
     const dropdownRef = useRef(null);
     const profileDropdownRef = useRef(null);
@@ -32,15 +34,23 @@ export default function Navbar() {
 
     const toggleDropdown = (e) => {
         e?.stopPropagation();
-        setIsDropdownOpen(!isDropdownOpen);
+    
+        setIsDropdownOpen((prev) => !prev);
         setIsProfileDropdownOpen(false);
     };
-
+    
     const toggleProfileDropdown = (e) => {
         e?.stopPropagation();
-        setIsProfileDropdownOpen(!isProfileDropdownOpen);
+    
+        setIsProfileDropdownOpen((prev) => !prev);
         setIsDropdownOpen(false);
     };
+    // for mobile
+    const toggleMobileDropdown = (e) => {
+        e?.stopPropagation();
+        setIsMobileDropdownOpen(prev => !prev);
+    };
+    
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-500 text-white shadow-lg border-b-3 border-white">
@@ -61,7 +71,7 @@ export default function Navbar() {
 
                         {/* Projects Dropdown */}
                         <div className="relative" ref={dropdownRef}>
-                            <button onClick={toggleDropdown} className="flex items-center hover:text-yellow-300">
+                            <button onClick={toggleDropdown} className="flex items-center hover:text-yellow-300 cursor-pointer">
                                 Projects <ChevronDown className="ml-1 w-4 h-4" />
                             </button>
                             {isDropdownOpen && (
@@ -87,7 +97,7 @@ export default function Navbar() {
                         {/* Profile */}
                         <div className="relative" ref={profileDropdownRef}>
                             <button onClick={toggleProfileDropdown}>
-                                <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center">
+                                <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center cursor-pointer">
                                     <User size={18} />
                                 </div>
                             </button>
@@ -118,43 +128,40 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             {isMenuOpen && (
+                <div className="border-t border-white pt-3">
+                <div className="flex items-center space-x-3">
+                    <div className="h-8 w-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <User size={18} />
+                    </div>
+                    <div>
+                        <div className="text-sm font-semibold">User Name</div>
+                        <div className="text-xs text-white/80">user@example.com</div>
+                    </div>
+                    <div className="ml-auto relative pr-4 mr-1">
+                        <Bell size={18} />
+                        <span className="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full h-4 w-4 flex items-center justify-center mr-2">
+                            3
+                        </span>
+                    </div>
+                </div>
                 <div className="md:hidden px-4 pt-2 pb-3 space-y-1">
                     <a href="#" className="block py-2 hover:text-yellow-300">Home</a>
                     <a href="#" className="block py-2 hover:text-yellow-300">About</a>
 
                     <div>
-                        <button onClick={toggleDropdown} className="flex justify-between items-center w-full py-2 hover:text-yellow-300">
-                            Projects <ChevronDown className="w-4 h-4" />
+                        <button onClick={toggleMobileDropdown} className="flex justify-between items-center w-full py-2 hover:text-yellow-300">
+                        Projects <ChevronDown className="w-4 h-4" />
                         </button>
-                        {isDropdownOpen && (
-                            <div className="pl-4">
-                                <a href="#" className="block py-2 hover:text-yellow-300">Web Development</a>
-                                <a href="#" className="block py-2 hover:text-yellow-300">Mobile Apps</a>
-                                <a href="#" className="block py-2 hover:text-yellow-300">UI/UX Design</a>
-                                <a href="#" className="block py-2 hover:text-yellow-300">Consulting</a>
-                            </div>
+                        {isMobileDropdownOpen && (
+                        <div className="pl-4">
+                            <a href="#" className="block py-2 hover:text-yellow-300">Web Development</a>
+                            <a href="#" className="block py-2 hover:text-yellow-300">Mobile Apps</a>
+                            <a href="#" className="block py-2 hover:text-yellow-300">UI/UX Design</a>
+                            <a href="#" className="block py-2 hover:text-yellow-300">Consulting</a>
+                        </div>
                         )}
                     </div>
-
                     <a href="#" className="block py-2 hover:text-yellow-300">Contact</a>
-
-                    <div className="border-t border-white pt-3">
-                        <div className="flex items-center space-x-3">
-                            <div className="h-8 w-8 bg-blue-600 rounded-full flex items-center justify-center">
-                                <User size={18} />
-                            </div>
-                            <div>
-                                <div className="text-sm font-semibold">User Name</div>
-                                <div className="text-xs text-white/80">user@example.com</div>
-                            </div>
-                            <div className="ml-auto relative">
-                                <Bell size={18} />
-                                <span className="absolute -top-1 -right-2 bg-red-500 text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                                    3
-                                </span>
-                            </div>
-                        </div>
-
                         <div className="mt-2 space-y-1">
                             <a href="#" className="flex items-center py-2 hover:text-yellow-300"><User size={16} className="mr-2" /> Profile</a>
                             <a href="#" className="flex items-center py-2 hover:text-yellow-300"><Settings size={16} className="mr-2" /> Settings</a>
